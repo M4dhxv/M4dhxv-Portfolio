@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 
 const experiences = [
   {
@@ -12,7 +12,7 @@ const experiences = [
       "Single post generated ~7,000 comments requesting a guide",
       "Implemented DM automation to convert engagement into leads",
     ],
-    color: "sticky-note-yellow",
+    color: "sticky-yellow",
   },
   {
     role: "Creative Director",
@@ -24,7 +24,7 @@ const experiences = [
       "Defined creative frameworks and scripts",
       "Focused on creator-native storytelling",
     ],
-    color: "sticky-note-green",
+    color: "sticky-green",
   },
   {
     role: "UGC Creator & Growth Strategist",
@@ -36,7 +36,7 @@ const experiences = [
       "Delivered strong results from first month",
       "Built deep intuition around GenAI user psychology",
     ],
-    color: "sticky-note-pink",
+    color: "sticky-pink",
   },
   {
     role: "UGC Creator",
@@ -47,7 +47,7 @@ const experiences = [
       "Produced creator-led AI content optimized for virality",
       "Focused on simple explanations, strong hooks, and POV formats",
     ],
-    color: "sticky-note-blue",
+    color: "sticky-blue",
   },
   {
     role: "Global Creator Sprint",
@@ -59,7 +59,7 @@ const experiences = [
       "Generated ~2.2M views in 3 days",
       "Fast-paced environment emphasizing rapid testing",
     ],
-    color: "sticky-note-yellow",
+    color: "sticky-yellow",
   },
   {
     role: "AI Influencer Page",
@@ -70,68 +70,120 @@ const experiences = [
       "Built page to ~3,800 followers in ~10 days",
       "Tested GenAI narratives and product-style storytelling",
     ],
-    color: "sticky-note-green",
+    color: "sticky-green",
   },
 ];
 
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.12,
+    },
+  },
+};
+
+const cardVariants: Variants = {
+  hidden: { opacity: 0, y: 50 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      type: "spring",
+      stiffness: 80,
+      damping: 14,
+    },
+  },
+};
+
 const Experience = () => {
   return (
-    <section id="experience" className="py-24 px-4">
+    <section id="experience" className="py-28 px-4">
       <div className="max-w-5xl mx-auto">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-16"
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ 
+            type: "spring",
+            stiffness: 80,
+            damping: 15,
+          }}
+          className="text-center mb-20"
         >
-          <span className="text-sm font-medium text-primary uppercase tracking-wider">Career</span>
-          <h2 className="section-heading mt-2">Work Experience</h2>
+          <motion.span 
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="text-sm font-medium text-primary uppercase tracking-widest"
+          >
+            Career
+          </motion.span>
+          <h2 className="section-heading mt-3">Work Experience</h2>
         </motion.div>
 
-        <div className="space-y-6">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+          className="space-y-8"
+        >
           {experiences.map((exp, index) => (
             <motion.div
               key={`${exp.company}-${exp.role}`}
-              initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="bento-card relative overflow-hidden"
+              variants={cardVariants}
+              whileHover={{ 
+                y: -4,
+                transition: { type: "spring", stiffness: 300 }
+              }}
+              className="bento-card relative overflow-hidden group"
             >
               {/* Decorative tape */}
-              <div 
-                className="absolute -top-2 left-8 w-16 h-6 rounded-sm opacity-70"
+              <motion.div 
+                className="absolute -top-2 left-8 w-16 h-6 rounded-sm opacity-60"
+                initial={{ rotate: -12, scale: 0.8 }}
+                whileInView={{ rotate: -8, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3 + index * 0.1 }}
                 style={{
                   background: "linear-gradient(90deg, hsl(350 60% 85% / 0.8) 0%, hsl(350 60% 90% / 0.6) 100%)",
-                  transform: "rotate(-8deg)",
                 }}
               />
               
               <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
                 <div className="flex-1">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className={`px-3 py-1 rounded-full text-xs font-medium ${exp.color}`}>
+                  <div className="flex items-center gap-3 mb-3">
+                    <span className={`px-3 py-1.5 rounded-full text-xs font-medium bg-${exp.color}`}>
                       {exp.type}
                     </span>
                     <span className="text-sm text-muted-foreground">{exp.period}</span>
                   </div>
-                  <h3 className="font-serif text-xl font-semibold text-foreground">{exp.role}</h3>
-                  <p className="text-muted-foreground mb-4">{exp.company}</p>
+                  <h3 className="font-serif text-xl md:text-2xl font-semibold text-foreground leading-tight">{exp.role}</h3>
+                  <p className="text-muted-foreground mb-5 text-base">{exp.company}</p>
                   
-                  <ul className="space-y-2">
+                  <ul className="space-y-2.5">
                     {exp.highlights.map((highlight, i) => (
-                      <li key={i} className="flex items-start gap-2 text-sm text-foreground/80">
-                        <span className="text-primary mt-0.5">•</span>
+                      <motion.li 
+                        key={i} 
+                        initial={{ opacity: 0, x: -10 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.4 + i * 0.08 }}
+                        className="flex items-start gap-3 text-sm text-foreground/80 leading-relaxed"
+                      >
+                        <span className="text-primary mt-0.5 text-lg">•</span>
                         {highlight}
-                      </li>
+                      </motion.li>
                     ))}
                   </ul>
                 </div>
               </div>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

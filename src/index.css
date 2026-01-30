@@ -122,9 +122,16 @@ Soft pink gradients, playful typography, scrapbook aesthetic
     @apply border-border;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     @apply bg-background text-foreground antialiased;
     font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    line-height: 1.6;
     background: linear-gradient(
       180deg,
       hsl(var(--gradient-start)) 0%,
@@ -136,6 +143,9 @@ Soft pink gradients, playful typography, scrapbook aesthetic
 
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
   }
 }
 

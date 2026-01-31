@@ -1,5 +1,12 @@
 import { motion, Variants } from "framer-motion";
 
+const highlightCards = [
+  { emoji: "📸", title: "Instagram & TikTok", subtitle: "Primary Platforms", color: "sticky-note-yellow", rotate: -2 },
+  { value: "40M+", subtitle: "Monthly Reach (Peak)", color: "sticky-note-green", rotate: 1 },
+  { emoji: "🚀", title: "YC-Backed", subtitle: "Startup Experience", color: "sticky-note-pink", rotate: 2 },
+  { value: "10 days", subtitle: "0 → 6K followers", color: "sticky-note-blue", rotate: -1 },
+];
+
 const results = [
   { value: "40M+", label: "Monthly reach on Instagram (peak)", icon: "📊" },
   { value: "40M", label: "Views in a single month", icon: "👀" },
@@ -34,10 +41,58 @@ const itemVariants: Variants = {
   },
 };
 
+const cardVariants: Variants = {
+  hidden: { opacity: 0, scale: 0.9, y: 20 },
+  visible: (i: number) => ({
+    opacity: 1,
+    scale: 1,
+    y: 0,
+    transition: {
+      type: "spring",
+      stiffness: 100,
+      damping: 12,
+      delay: i * 0.08,
+    },
+  }),
+};
+
 const Results = () => {
   return (
     <section id="results" className="py-28 px-4">
       <div className="max-w-6xl mx-auto">
+        {/* Highlight Cards - Moved from Hero */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+          className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-5 max-w-4xl mx-auto mb-24"
+        >
+          {highlightCards.map((card, i) => (
+            <motion.div
+              key={card.subtitle}
+              custom={i}
+              variants={cardVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              whileHover={{ 
+                rotate: card.rotate > 0 ? card.rotate + 3 : card.rotate - 3, 
+                scale: 1.04,
+                transition: { type: "spring", stiffness: 300 }
+              }}
+              className={`col-span-1 sticky-note ${card.color} p-5`}
+              style={{ transform: `rotate(${card.rotate}deg)` }}
+            >
+              {card.emoji && <span className="text-3xl mb-3 block">{card.emoji}</span>}
+              {card.value && <p className="font-serif text-3xl font-bold text-foreground/90">{card.value}</p>}
+              {card.title && <p className="font-medium text-foreground/90 text-sm">{card.title}</p>}
+              <p className="text-xs text-foreground/60 mt-1">{card.subtitle}</p>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -65,6 +120,7 @@ const Results = () => {
           </p>
         </motion.div>
 
+        {/* Results Grid */}
         <motion.div
           variants={containerVariants}
           initial="hidden"

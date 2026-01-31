@@ -47,9 +47,9 @@ const Navigation = () => {
         damping: 15,
         delay: 0.2,
       }}
-      className="fixed top-6 left-0 right-0 z-50 flex justify-center px-4"
+      className="fixed top-4 left-0 right-0 z-50 flex justify-center px-4"
     >
-      <nav className="nav-pill flex items-center gap-1">
+      <nav className="glass-nav flex items-center gap-1 px-2 py-2 rounded-full">
         {navItems.map((item) => (
           <motion.button
             key={item.id}
@@ -65,7 +65,7 @@ const Navigation = () => {
             {activeSection === item.id && (
               <motion.div
                 layoutId="activeNav"
-                className="absolute inset-0 bg-secondary rounded-full"
+                className="absolute inset-0 bg-white/20 dark:bg-white/10 rounded-full"
                 style={{ zIndex: -1 }}
                 transition={{ type: "spring", stiffness: 300, damping: 25 }}
               />
@@ -81,10 +81,9 @@ const Navigation = () => {
         transition={{ delay: 0.5 }}
         whileHover={{ 
           scale: 1.03,
-          boxShadow: "0 8px 30px -5px hsl(var(--primary) / 0.4)",
         }}
         whileTap={{ scale: 0.97 }}
-        className="cta-button ml-4 hidden sm:block"
+        className="glass-nav ml-3 px-5 py-2 rounded-full text-sm font-medium hidden sm:flex items-center text-foreground hover:bg-white/20 dark:hover:bg-white/10 transition-colors"
       >
         Get in Touch
       </motion.a>

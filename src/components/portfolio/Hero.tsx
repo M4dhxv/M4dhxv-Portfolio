@@ -6,7 +6,7 @@ const containerVariants: Variants = {
     opacity: 1,
     transition: {
       staggerChildren: 0.12,
-      delayChildren: 0.1,
+      delayChildren: 0.3,
     },
   },
 };
@@ -24,25 +24,10 @@ const itemVariants: Variants = {
   },
 };
 
-const cardVariants: Variants = {
-  hidden: { opacity: 0, scale: 0.9, y: 20 },
-  visible: (i: number) => ({
-    opacity: 1,
-    scale: 1,
-    y: 0,
-    transition: {
-      type: "spring",
-      stiffness: 100,
-      damping: 12,
-      delay: 0.5 + i * 0.08,
-    },
-  }),
-};
-
 const Hero = () => {
   return (
-    <section id="hero" className="relative min-h-screen flex flex-col items-center justify-center px-4 pt-24 pb-20 overflow-hidden">
-      {/* Spline Traffic Light Background */}
+    <section id="hero" className="relative min-h-screen flex flex-col items-center justify-end px-4 pb-32 overflow-hidden">
+      {/* Spline Traffic Light Background - Full Screen */}
       <div className="absolute inset-0 z-0">
         <iframe 
           src='https://my.spline.design/trafficlight-SwC3ZMB6hYzA5vjumfKVi4Z6/' 
@@ -54,17 +39,17 @@ const Hero = () => {
         />
       </div>
       
-      {/* Content Layer */}
+      {/* Hero Text Content - Positioned at bottom, below traffic light */}
       <motion.div
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="relative z-10 flex flex-col items-center"
+        className="relative z-10 flex flex-col items-center max-w-5xl"
       >
         {/* Status Badge */}
         <motion.div
           variants={itemVariants}
-          className="status-badge mb-10"
+          className="status-badge mb-8 backdrop-blur-sm bg-card/80"
         >
           <span className="status-dot" />
           <span className="text-muted-foreground text-sm">Open for UGC & Creative Direction roles</span>
@@ -73,7 +58,7 @@ const Hero = () => {
         {/* Main Heading */}
         <motion.h1
           variants={itemVariants}
-          className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-center max-w-5xl leading-[1.1] mb-8 tracking-tight"
+          className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-center leading-[1.1] mb-6 tracking-tight"
         >
           Hello, I'm{" "}
           <span className="text-gradient">Madhav</span>{" "}
@@ -115,88 +100,11 @@ const Hero = () => {
 
         <motion.p
           variants={itemVariants}
-          className="text-lg md:text-xl text-muted-foreground text-center max-w-2xl mb-14 leading-relaxed"
+          className="text-lg md:text-xl text-muted-foreground text-center max-w-2xl leading-relaxed"
         >
           I build, scale, and direct UGC programs for AI and GenAI startups. 
           I've led strategy for YC-backed companies and driven 40M+ monthly reach.
         </motion.p>
-
-        {/* Bento Grid Hero Cards */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-5 w-full max-w-4xl">
-          {/* Instagram Card */}
-          <motion.div
-            custom={0}
-            variants={cardVariants}
-            initial="hidden"
-            animate="visible"
-            whileHover={{ 
-              rotate: -3, 
-              scale: 1.04,
-              transition: { type: "spring", stiffness: 300 }
-            }}
-            className="col-span-1 sticky-note sticky-note-yellow p-5"
-            style={{ transform: "rotate(-2deg)" }}
-          >
-            <span className="text-3xl mb-3 block">📸</span>
-            <p className="font-medium text-foreground/90 text-sm">Instagram & TikTok</p>
-            <p className="text-xs text-foreground/60 mt-1">Primary Platforms</p>
-          </motion.div>
-
-          {/* Stats Card */}
-          <motion.div
-            custom={1}
-            variants={cardVariants}
-            initial="hidden"
-            animate="visible"
-            whileHover={{ 
-              rotate: 3, 
-              scale: 1.04,
-              transition: { type: "spring", stiffness: 300 }
-            }}
-            className="col-span-1 sticky-note sticky-note-green p-5"
-            style={{ transform: "rotate(1deg)" }}
-          >
-            <p className="font-serif text-3xl font-bold text-foreground/90">40M+</p>
-            <p className="text-xs text-foreground/60 mt-1">Monthly Reach (Peak)</p>
-          </motion.div>
-
-          {/* YC Card */}
-          <motion.div
-            custom={2}
-            variants={cardVariants}
-            initial="hidden"
-            animate="visible"
-            whileHover={{ 
-              rotate: -2, 
-              scale: 1.04,
-              transition: { type: "spring", stiffness: 300 }
-            }}
-            className="col-span-1 sticky-note sticky-note-pink p-5"
-            style={{ transform: "rotate(2deg)" }}
-          >
-            <span className="text-2xl mb-2 block">🚀</span>
-            <p className="font-medium text-foreground/90 text-sm">YC-Backed</p>
-            <p className="text-xs text-foreground/60 mt-1">Startup Experience</p>
-          </motion.div>
-
-          {/* Speed Card */}
-          <motion.div
-            custom={3}
-            variants={cardVariants}
-            initial="hidden"
-            animate="visible"
-            whileHover={{ 
-              rotate: 2, 
-              scale: 1.04,
-              transition: { type: "spring", stiffness: 300 }
-            }}
-            className="col-span-1 sticky-note sticky-note-blue p-5"
-            style={{ transform: "rotate(-1deg)" }}
-          >
-            <p className="font-serif text-3xl font-bold text-foreground/90">10 days</p>
-            <p className="text-xs text-foreground/60 mt-1">0 → 6K followers</p>
-          </motion.div>
-        </div>
       </motion.div>
     </section>
   );

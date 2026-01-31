@@ -255,7 +255,18 @@ Soft pink gradients, playful typography, scrapbook aesthetic
     background-clip: text;
   }
 
-  /* Nav pill */
+  /* Glassmorphism Navigation */
+  .glass-nav {
+    background: hsl(var(--background) / 0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid hsl(var(--border) / 0.5);
+    box-shadow: 
+      0 4px 30px hsl(var(--primary) / 0.05),
+      inset 0 1px 0 hsl(0 0% 100% / 0.1);
+  }
+
+  /* Nav pill - legacy support */
   .nav-pill {
     @apply px-6 py-3 rounded-full font-medium text-sm transition-all duration-200;
     background: hsl(var(--card));

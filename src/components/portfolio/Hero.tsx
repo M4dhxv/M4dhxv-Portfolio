@@ -41,7 +41,18 @@ const cardVariants: Variants = {
 
 const Hero = () => {
   return (
-    <section id="hero" className="min-h-screen flex flex-col items-center justify-center px-4 pt-24 pb-20">
+    <section id="hero" className="min-h-screen flex flex-col items-center px-4 pt-24 pb-20">
+      {/* Spline Traffic Light */}
+      <div className="w-full max-w-md h-[300px] md:h-[400px] mb-8">
+        <iframe 
+          src='https://my.spline.design/trafficlight-SwC3ZMB6hYzA5vjumfKVi4Z6/' 
+          frameBorder='0' 
+          width='100%' 
+          height='100%'
+          className="pointer-events-auto"
+          title="Traffic Light 3D"
+        />
+      </div>
       <motion.div
         variants={containerVariants}
         initial="hidden"

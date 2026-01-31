@@ -41,9 +41,9 @@ const cardVariants: Variants = {
 
 const Hero = () => {
   return (
-    <section id="hero" className="min-h-screen flex flex-col items-center px-4 pt-24 pb-20">
-      {/* Spline Traffic Light */}
-      <div className="w-full max-w-md h-[300px] md:h-[400px] mb-8">
+    <section id="hero" className="relative min-h-screen flex flex-col items-center justify-center px-4 pt-24 pb-20 overflow-hidden">
+      {/* Spline Traffic Light Background */}
+      <div className="absolute inset-0 z-0">
         <iframe 
           src='https://my.spline.design/trafficlight-SwC3ZMB6hYzA5vjumfKVi4Z6/' 
           frameBorder='0' 
@@ -53,11 +53,13 @@ const Hero = () => {
           title="Traffic Light 3D"
         />
       </div>
+      
+      {/* Content Layer */}
       <motion.div
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="flex flex-col items-center"
+        className="relative z-10 flex flex-col items-center"
       >
         {/* Status Badge */}
         <motion.div

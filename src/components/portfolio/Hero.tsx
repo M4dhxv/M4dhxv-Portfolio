@@ -39,12 +39,12 @@ const Hero = () => {
         />
       </div>
       
-      {/* Hero Text Content - Positioned at bottom, below traffic light */}
+      {/* Hero Text Content - Positioned at bottom left, avoiding the pole */}
       <motion.div
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="relative z-10 flex flex-col items-center max-w-5xl"
+        className="relative z-10 flex flex-col items-start max-w-5xl mr-auto pl-8 md:pl-16 lg:pl-24"
       >
         {/* Status Badge */}
         <motion.div

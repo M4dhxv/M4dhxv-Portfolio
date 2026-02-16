@@ -1,111 +1,163 @@
-import { motion, Variants } from "framer-motion";
-
-const containerVariants: Variants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.12,
-      delayChildren: 0.3,
-    },
-  },
-};
-
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 25 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      type: "spring",
-      stiffness: 100,
-      damping: 15,
-    },
-  },
-};
+import { useRef } from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 
 const Hero = () => {
+  const containerRef = useRef<HTMLElement>(null);
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  const textRef = useRef<HTMLParagraphElement>(null);
+  const subtextRef = useRef<HTMLParagraphElement>(null);
+  const badgeRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const orbsRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    // Initial timeline
+    const tl = gsap.timeline();
+
+    // Orbs animation (floating)
+    gsap.to(".orb", {
+      y: "random(-50, 50)",
+      x: "random(-50, 50)",
+      scale: "random(0.8, 1.2)",
+      duration: "random(5, 10)",
+      repeat: -1,
+      yoyo: true,
+      ease: "sine.inOut",
+      stagger: 1,
+    });
+
+    // Content Reveal
+    tl.from(badgeRef.current, {
+      y: 50,
+      opacity: 0,
+      duration: 1,
+      ease: "power3.out",
+    })
+      .from(headingRef.current, {
+        y: 100,
+        opacity: 0,
+        duration: 1.2,
+        ease: "power4.out",
+      }, "-=0.5")
+      .from(textRef.current, {
+        y: 50,
+        opacity: 0,
+        duration: 1,
+        ease: "power3.out",
+      }, "-=0.8")
+      .from(subtextRef.current, {
+        y: 30,
+        opacity: 0,
+        duration: 1,
+        ease: "power3.out",
+      }, "-=0.6")
+      .from(buttonRef.current, {
+        scale: 0.8,
+        opacity: 0,
+        duration: 0.8,
+        ease: "back.out(1.7)",
+      }, "-=0.4");
+
+    // Parallax Effect on Mouse Move
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!containerRef.current) return;
+
+      const { clientX, clientY } = e;
+      const { innerWidth, innerHeight } = window;
+
+      const x = (clientX - innerWidth / 2) / innerWidth;
+      const y = (clientY - innerHeight / 2) / innerHeight;
+
+      gsap.to(headingRef.current, {
+        x: x * 50,
+        y: y * 50,
+        duration: 2,
+        ease: "power2.out",
+      });
+
+      gsap.to(orbsRef.current, {
+        x: x * -100,
+        y: y * -100,
+        duration: 3,
+        ease: "power2.out",
+      });
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, { scope: containerRef });
+
   return (
-    <section id="hero" className="relative min-h-screen flex flex-col items-center justify-end px-4 pb-32 overflow-hidden">
-      {/* Spline Traffic Light Background - Full Screen */}
-      <div className="absolute inset-0 z-0">
-        <iframe 
-          src='https://my.spline.design/trafficlight-SwC3ZMB6hYzA5vjumfKVi4Z6/' 
-          frameBorder='0' 
-          width='100%' 
-          height='100%'
-          className="pointer-events-auto"
-          title="Traffic Light 3D"
-        />
+    <section
+      ref={containerRef}
+      className="relative min-h-screen flex items-center justify-center px-6 overflow-hidden"
+    >
+      {/* Animated gradient background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-primary/5" />
+
+      {/* Floating orbs container for parallax */}
+      <div ref={orbsRef} className="absolute inset-0 pointer-events-none">
+        <div className="orb absolute top-1/4 left-1/4 w-72 h-72 bg-primary/20 rounded-full blur-3xl opacity-60" />
+        <div className="orb absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl opacity-60" />
+        <div className="orb absolute top-1/2 left-1/2 w-48 h-48 bg-blue-500/20 rounded-full blur-3xl opacity-40" />
       </div>
-      
-      {/* Hero Text Content - Positioned at bottom left, avoiding the pole */}
-      <motion.div
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-        className="relative z-10 flex flex-col items-start max-w-5xl mr-auto pl-8 md:pl-16 lg:pl-24"
-      >
-        {/* Status Badge */}
-        <motion.div
-          variants={itemVariants}
-          className="status-badge mb-8 backdrop-blur-sm bg-card/80"
-        >
-          <span className="status-dot" />
-          <span className="text-muted-foreground text-sm">Open for UGC & Creative Direction roles</span>
-        </motion.div>
 
-        {/* Main Heading */}
-        <motion.h1
-          variants={itemVariants}
-          className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-center leading-[1.1] mb-6 tracking-tight"
+      <div className="relative z-10 max-w-5xl mx-auto text-center">
+        {/* Status badge */}
+        <div
+          ref={badgeRef}
+          className="inline-flex items-center gap-2 px-4 py-2 mb-8 rounded-full bg-primary/10 border border-primary/20 backdrop-blur-sm"
         >
-          Hello, I'm{" "}
-          <span className="text-gradient">Madhav</span>{" "}
-          <motion.span 
-            className="inline-block"
-            animate={{ 
-              y: [0, -8, 0],
-              rotate: [0, 5, -5, 0],
-            }}
-            transition={{ 
-              duration: 2.5, 
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          >
-            ✨
-          </motion.span>{" "}
-          A GenAI UGC Lead turning{" "}
-          <span className="italic font-medium">attention</span> into{" "}
-          <span className="inline-block">
-            <span className="relative">
-              demand
-              <svg className="absolute -bottom-1 left-0 w-full" height="8" viewBox="0 0 100 8" preserveAspectRatio="none">
-                <motion.path 
-                  d="M0 7 Q25 0 50 4 Q75 8 100 2" 
-                  stroke="hsl(var(--primary))" 
-                  strokeWidth="2" 
-                  fill="none" 
-                  strokeLinecap="round"
-                  initial={{ pathLength: 0 }}
-                  animate={{ pathLength: 1 }}
-                  transition={{ duration: 1, delay: 0.8, ease: "easeOut" }}
-                />
-              </svg>
-            </span>
+          <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+          <span className="text-sm text-muted-foreground">
+            Available for GenAI & Creative Direction roles
           </span>
-          .
-        </motion.h1>
+        </div>
 
-        <motion.p
-          variants={itemVariants}
-          className="text-lg md:text-xl text-muted-foreground text-center max-w-2xl leading-relaxed"
-        >
-          I build, scale, and direct UGC programs for AI and GenAI startups. 
-          I've led strategy for YC-backed companies and driven 40M+ monthly reach.
-        </motion.p>
-      </motion.div>
+        {/* Main heading */}
+        <div className="space-y-4">
+          <h1
+            ref={headingRef}
+            className="text-6xl md:text-9xl font-bold tracking-tighter"
+          >
+            Hey! I'm{" "}
+            <span className="bg-gradient-to-r from-primary via-purple-500 to-pink-500 bg-clip-text text-transparent inline-block hover:scale-105 transition-transform duration-300 cursor-default">
+              Madhav
+            </span>
+          </h1>
+
+          <p
+            ref={textRef}
+            className="text-3xl md:text-5xl font-medium text-muted-foreground"
+          >
+            a GenAI UGC Lead
+          </p>
+
+          <p
+            ref={subtextRef}
+            className="text-xl md:text-2xl text-muted-foreground/70 max-w-3xl mx-auto mt-6"
+          >
+            Currently turning{" "}
+            <span className="text-foreground font-semibold italic">attention</span>{" "}
+            into{" "}
+            <span className="text-foreground font-semibold">demand</span>
+          </p>
+        </div>
+
+        {/* CTA Button */}
+        <div className="mt-12">
+          <button
+            ref={buttonRef}
+            className="px-8 py-4 rounded-full bg-primary text-primary-foreground font-medium text-lg shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/40 hover:-translate-y-1 transition-all duration-300"
+          >
+            View My Work
+          </button>
+        </div>
+      </div>
     </section>
   );
 };

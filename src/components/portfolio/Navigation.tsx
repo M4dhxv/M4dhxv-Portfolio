@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
 const Navigation = () => {
   const [activeSection, setActiveSection] = useState("hero");
@@ -41,7 +42,7 @@ const Navigation = () => {
     <motion.header
       initial={{ y: -30, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ 
+      transition={{
         type: "spring",
         stiffness: 100,
         damping: 15,
@@ -54,11 +55,10 @@ const Navigation = () => {
           <motion.button
             key={item.id}
             onClick={() => scrollToSection(item.id)}
-            className={`relative px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-              activeSection === item.id 
-                ? "text-foreground" 
-                : "text-muted-foreground hover:text-foreground"
-            }`}
+            className={`relative px-4 py-2 rounded-full text-sm font-medium transition-colors ${activeSection === item.id
+              ? "text-foreground"
+              : "text-muted-foreground hover:text-foreground"
+              }`}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
@@ -79,7 +79,7 @@ const Navigation = () => {
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 0.5 }}
-        whileHover={{ 
+        whileHover={{
           scale: 1.03,
         }}
         whileTap={{ scale: 0.97 }}
@@ -87,6 +87,15 @@ const Navigation = () => {
       >
         Get in Touch
       </motion.a>
+
+      <motion.div
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 0.6 }}
+        className="ml-4"
+      >
+        <ThemeToggle />
+      </motion.div>
     </motion.header>
   );
 };

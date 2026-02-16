@@ -101,9 +101,9 @@ const Results = () => {
         </div>
 
         {/* Cards Layout (Relative on top) */}
-        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-[1fr_400px_1fr] gap-6 lg:gap-8 items-start">
+        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-[1fr_400px_1fr] gap-6 lg:gap-8 items-start pointer-events-none">
           {/* Left Cards */}
-          <div className="flex flex-col gap-4 order-2 lg:order-1">
+          <div className="flex flex-col gap-4 order-2 lg:order-1 pointer-events-auto">
             {leftCards.map((card, i) => (
               <GlassCard key={card.value} value={card.value} label={card.label} index={i} />
             ))}
@@ -113,7 +113,7 @@ const Results = () => {
           <div className="hidden lg:block order-1 lg:order-2 h-full min-h-[400px]" />
 
           {/* Right Cards */}
-          <div className="flex flex-col gap-4 order-3">
+          <div className="flex flex-col gap-4 order-3 pointer-events-auto">
             {rightCards.map((card, i) => (
               <GlassCard key={card.value} value={card.value} label={card.label} index={i + 3} />
             ))}

@@ -17,7 +17,7 @@ const MarqueeText = () => {
         const loop = gsap.to(wrapper, {
             xPercent: -50,
             repeat: -1,
-            duration: 20,
+            duration: 60,
             ease: "linear",
         });
 

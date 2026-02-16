@@ -2,7 +2,8 @@
 
 @tailwind base;
 @tailwind components;
-@tailwind utilities;/* 
+@tailwind utilities;
+/* 
 Design System inspired by Diya Patel's portfolio
 Soft pink gradients, playful typography, scrapbook aesthetic
 */
@@ -53,7 +54,7 @@ Soft pink gradients, playful typography, scrapbook aesthetic
     --sticky-green: 145 60% 75%;
     --sticky-pink: 350 70% 88%;
     --sticky-blue: 200 70% 85%;
-    
+
     /* Gradient background */
     --gradient-start: 280 60% 98%;
     --gradient-mid: 320 50% 96%;
@@ -71,22 +72,22 @@ Soft pink gradients, playful typography, scrapbook aesthetic
   }
 
   .dark {
-    --background: 240 10% 8%;
-    --foreground: 0 0% 95%;
+    --background: 0 0% 0%;
+    --foreground: 0 0% 98%;
 
-    --card: 240 10% 12%;
-    --card-foreground: 0 0% 95%;
+    --card: 0 0% 4%;
+    --card-foreground: 0 0% 98%;
 
-    --popover: 240 10% 10%;
-    --popover-foreground: 0 0% 95%;
+    --popover: 0 0% 4%;
+    --popover-foreground: 0 0% 98%;
 
     --primary: 350 70% 55%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 280 30% 20%;
-    --secondary-foreground: 0 0% 95%;
+    --secondary: 240 5% 10%;
+    --secondary-foreground: 0 0% 98%;
 
-    --muted: 240 10% 18%;
+    --muted: 240 5% 10%;
     --muted-foreground: 0 0% 65%;
 
     --accent: 25 60% 25%;
@@ -95,8 +96,8 @@ Soft pink gradients, playful typography, scrapbook aesthetic
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 95%;
 
-    --border: 240 10% 20%;
-    --input: 240 10% 20%;
+    --border: 240 5% 15%;
+    --input: 240 5% 15%;
     --ring: 350 70% 55%;
 
     --sticky-yellow: 48 80% 35%;
@@ -104,13 +105,18 @@ Soft pink gradients, playful typography, scrapbook aesthetic
     --sticky-pink: 350 50% 35%;
     --sticky-blue: 200 50% 30%;
 
-    --sidebar-background: 240 10% 8%;
-    --sidebar-foreground: 0 0% 95%;
+    /* Dark Mode Gradients */
+    --gradient-start: 0 0% 0%;
+    --gradient-mid: 240 5% 5%;
+    --gradient-end: 0 0% 2%;
+
+    --sidebar-background: 0 0% 0%;
+    --sidebar-foreground: 0 0% 98%;
     --sidebar-primary: 350 70% 55%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 280 30% 20%;
-    --sidebar-accent-foreground: 0 0% 95%;
-    --sidebar-border: 240 10% 20%;
+    --sidebar-accent: 240 5% 10%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 240 5% 15%;
     --sidebar-ring: 350 70% 55%;
   }
 }
@@ -130,16 +136,19 @@ Soft pink gradients, playful typography, scrapbook aesthetic
     font-weight: 400;
     letter-spacing: -0.01em;
     line-height: 1.6;
-    background: linear-gradient(
-      180deg,
-      hsl(var(--gradient-start)) 0%,
-      hsl(var(--gradient-mid)) 50%,
-      hsl(var(--gradient-end)) 100%
-    );
+    background: linear-gradient(180deg,
+        hsl(var(--gradient-start)) 0%,
+        hsl(var(--gradient-mid)) 50%,
+        hsl(var(--gradient-end)) 100%);
     background-attachment: fixed;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: 'Playfair Display', serif;
     font-weight: 600;
     letter-spacing: -0.02em;
@@ -148,20 +157,21 @@ Soft pink gradients, playful typography, scrapbook aesthetic
 }
 
 @layer components {
+
   /* Sticky note variants */
   .sticky-note {
     @apply rounded-sm shadow-md p-4 relative;
     transform: rotate(-2deg);
   }
-  
+
   .sticky-note-yellow {
     background: hsl(var(--sticky-yellow));
   }
-  
+
   .sticky-note-green {
     background: hsl(var(--sticky-green));
   }
-  
+
   .sticky-note-pink {
     background: hsl(var(--sticky-pink));
   }
@@ -173,11 +183,9 @@ Soft pink gradients, playful typography, scrapbook aesthetic
   /* Scrapbook tape effect */
   .tape {
     @apply absolute w-16 h-6 opacity-70;
-    background: linear-gradient(
-      90deg,
-      hsl(350 60% 85% / 0.8) 0%,
-      hsl(350 60% 90% / 0.6) 100%
-    );
+    background: linear-gradient(90deg,
+        hsl(350 60% 85% / 0.8) 0%,
+        hsl(350 60% 90% / 0.6) 100%);
     transform: rotate(-8deg);
   }
 
@@ -236,11 +244,9 @@ Soft pink gradients, playful typography, scrapbook aesthetic
   /* Metric card */
   .metric-card {
     @apply p-6 rounded-2xl text-center;
-    background: linear-gradient(
-      135deg,
-      hsl(var(--card)) 0%,
-      hsl(var(--secondary)) 100%
-    );
+    background: linear-gradient(135deg,
+        hsl(var(--card)) 0%,
+        hsl(var(--secondary)) 100%);
     border: 1px solid hsl(var(--border));
   }
 
@@ -259,7 +265,7 @@ Soft pink gradients, playful typography, scrapbook aesthetic
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid hsl(var(--border) / 0.5);
-    box-shadow: 
+    box-shadow:
       0 4px 30px hsl(var(--primary) / 0.05),
       inset 0 1px 0 hsl(0 0% 100% / 0.1);
   }
@@ -270,7 +276,7 @@ Soft pink gradients, playful typography, scrapbook aesthetic
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border: 1px solid hsl(var(--border) / 0.4);
-    box-shadow: 
+    box-shadow:
       0 8px 32px hsl(var(--primary) / 0.08),
       inset 0 1px 0 hsl(0 0% 100% / 0.15);
   }
@@ -310,11 +316,9 @@ Soft pink gradients, playful typography, scrapbook aesthetic
   }
 
   .bg-gradient-soft {
-    background: linear-gradient(
-      180deg,
-      hsl(var(--gradient-start)) 0%,
-      hsl(var(--gradient-mid)) 50%,
-      hsl(var(--gradient-end)) 100%
-    );
+    background: linear-gradient(180deg,
+        hsl(var(--gradient-start)) 0%,
+        hsl(var(--gradient-mid)) 50%,
+        hsl(var(--gradient-end)) 100%);
   }
 }

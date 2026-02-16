@@ -1,9 +1,7 @@
 import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-gsap.registerPlugin(ScrollTrigger);
 
 const MarqueeText = () => {
     const container = useRef<HTMLDivElement>(null);
@@ -17,25 +15,8 @@ const MarqueeText = () => {
         const loop = gsap.to(wrapper, {
             xPercent: -50,
             repeat: -1,
-            duration: 60,
+            duration: 40,
             ease: "linear",
-        });
-
-        ScrollTrigger.create({
-            trigger: container.current,
-            start: "top bottom",
-            end: "bottom top",
-            onUpdate: (self) => {
-                const velocity = Math.abs(self.getVelocity());
-                // Speed up based on scroll velocity
-                const timeScale = 1 + velocity / 50;
-                gsap.to(loop, { timeScale: timeScale, duration: 0.5, overwrite: true });
-
-                // Reset speed when velocity drops
-                if (velocity < 10) {
-                    gsap.to(loop, { timeScale: 1, duration: 0.5 });
-                }
-            },
         });
     }, { scope: container });
 

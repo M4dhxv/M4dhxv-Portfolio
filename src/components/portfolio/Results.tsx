@@ -44,20 +44,20 @@ const Results = () => {
 
   return (
     <section id="results" className="py-28 px-4">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-6xl mx-auto relative">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ 
+          transition={{
             type: "spring",
             stiffness: 80,
             damping: 15,
           }}
           className="text-center mb-16"
         >
-          <motion.span 
+          <motion.span
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -68,13 +68,40 @@ const Results = () => {
           </motion.span>
           <h2 className="section-heading mt-3">High-Signal Results</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto text-lg leading-relaxed">
-            Proven ability to turn content into leads, comments, and demand. 
+            Proven ability to turn content into leads, comments, and demand.
             These aren't vanity metrics — they're signals of real engagement.
           </p>
         </motion.div>
 
-        {/* Cards + Cat Layout */}
-        <div className="relative grid grid-cols-1 lg:grid-cols-[1fr_minmax(300px,400px)_1fr] gap-6 lg:gap-8 items-center">
+        {/* Background Spline (Absolute) */}
+        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{
+              type: "spring",
+              stiffness: 60,
+              damping: 20,
+              delay: 0.2
+            }}
+            className="w-full h-full"
+          >
+            <iframe
+              src='https://my.spline.design/robotcat-2yNAehQ7frY0F2zjrX3mFbls/'
+              frameBorder='0'
+              width='100%'
+              height='100%'
+              className="w-full h-full pointer-events-auto"
+              title="Interactive Robot Cat"
+              loading="lazy"
+              style={{ background: 'transparent' }}
+            />
+          </motion.div>
+        </div>
+
+        {/* Cards Layout (Relative on top) */}
+        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-[1fr_400px_1fr] gap-6 lg:gap-8 items-start">
           {/* Left Cards */}
           <div className="flex flex-col gap-4 order-2 lg:order-1">
             {leftCards.map((card, i) => (
@@ -82,30 +109,8 @@ const Results = () => {
             ))}
           </div>
 
-          {/* Center Cat Spline */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ 
-              type: "spring",
-              stiffness: 60,
-              damping: 20,
-              delay: 0.2
-            }}
-            className="relative aspect-square min-h-[300px] md:min-h-[400px] order-1 lg:order-2"
-          >
-            <iframe 
-              src='https://my.spline.design/robotcat-2yNAehQ7frY0F2zjrX3mFbls/' 
-              frameBorder='0' 
-              width='100%' 
-              height='100%'
-              className="absolute inset-0 pointer-events-auto"
-              title="Interactive Robot Cat"
-              loading="lazy"
-              style={{ background: 'transparent' }}
-            />
-          </motion.div>
+          {/* Center Spacer for Cat */}
+          <div className="hidden lg:block order-1 lg:order-2 h-full min-h-[400px]" />
 
           {/* Right Cards */}
           <div className="flex flex-col gap-4 order-3">
